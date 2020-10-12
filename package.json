@@ -1,6 +1,7 @@
 {
   "name": "friday",
   "version": "0.1.0",
+  "homepage": "https://artsiomyermakou.github.io/Team_project",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +47,7 @@
     "@types/axios": "^0.14.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
-    "@types/redux-thunk": "^2.1.0"
+    "@types/redux-thunk": "^2.1.0",
+    "gh-pages": "^3.1.0"
   }
 }
