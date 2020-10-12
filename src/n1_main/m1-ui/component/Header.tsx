@@ -1,10 +1,13 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import style from "../component/Nav.module.css"
+
 
 const Header = () => {
-    return <div>
-        <Link to={"/"}>Main</Link>
-    </div>
+    return <nav className={style.nav}>
+        <NavLink exact activeClassName={style.linkIsActive} className={style.link} to="/">Main</NavLink>
+        <NavLink activeClassName={style.linkIsActive} className={style.link} to="/Second">Second</NavLink>
+    </nav>
 }
 
 export default Header;
