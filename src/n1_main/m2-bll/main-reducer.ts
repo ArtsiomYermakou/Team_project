@@ -5,7 +5,7 @@ const InitialState = {}
 
 const mainReducer = (state: InitialStateType = InitialState, action: ActionTypes) => {
     switch (action.type) {
-        case "Test": {
+        case "Main": {
 
         }
         default: {
@@ -13,7 +13,7 @@ const mainReducer = (state: InitialStateType = InitialState, action: ActionTypes
         }
     }
 }
-export const Test = () => (
-    {type: "Test"} as const
+export const MainAC = () => (
+    {type: "Main"} as const
 )
 export default mainReducer;

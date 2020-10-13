@@ -5,6 +5,8 @@ type ButtonPropsType = {
     nameButton: string
 }
 
-const ButtonMaterial = (props: ButtonPropsType) => <Button variant="contained" color="primary">{props.nameButton}</Button>
+const ButtonMaterial = (props: ButtonPropsType, {...rest}) => {
+    return <Button variant="contained" color="primary" {...rest}>{props.nameButton}</Button>
+}
 
 export default ButtonMaterial;

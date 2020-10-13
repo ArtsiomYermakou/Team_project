@@ -6,6 +6,8 @@ type InputPropsType = {
     label: string
 }
 
-const InputMaterial = (props: InputPropsType) => <TextField id="outlined-basic" label={props.label} variant="outlined" placeholder={props.placeholder}/>
+const InputMaterial = (props: InputPropsType, {...rest}) => {
+    return <TextField id="outlined-basic" label={props.label} variant="outlined" placeholder={props.placeholder} {...rest}/>
+}
 
 export default InputMaterial;
