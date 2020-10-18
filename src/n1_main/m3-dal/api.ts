@@ -17,9 +17,10 @@ export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<ResponseLoginType>("auth/login", data);
     },
+    registration(data: RegistrationDataType) {
+        return instance.post("auth/register", data);
+    },
 }
-
-
 //types
 export type LoginParamsType = {
     email: string
@@ -39,4 +40,10 @@ export type ResponseLoginType = {
     verified: boolean
     rememberMe: boolean
     error: string
+}
+
+export type RegistrationDataType = {
+    email: string
+    password: string
+    repeatPassword?: string // not necessarily
 }
