@@ -59,48 +59,50 @@ const Registration = () => {
     }
 
     return (
-        <div>
+        <>
             {loaderStatus === "loading" && <LinearProgress/>}
-            <h1 className={style.title}>Registration</h1>
+            <div className="container">
+                <h1 className={style.title}>Registration</h1>
 
-            <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
+                    <div>
+                        <input
+                            name="email"
+                            placeholder="Email"
+                            {...formik.getFieldProps('email')}
+                        />
+                        {formik.errors.email && formik.touched.email ?
+                            <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            {...formik.getFieldProps('password')}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            placeholder="Repeat Password"
+                            name="repeatPassword"
+                            {...formik.getFieldProps('repeatPassword')}
+                        />
+                        {formik.errors.password && formik.touched.password
+                            ? <div style={{color: 'red'}}>{formik.errors.password}</div>
+                            : null}
+                    </div>
+                    <button type="submit" disabled={loaderStatus === "loading"}>Send</button>
+                </form>
                 <div>
-                    <input
-                        name="email"
-                        placeholder="Email"
-                        {...formik.getFieldProps('email')}
-                    />
-                    {formik.errors.email && formik.touched.email ?
-                        <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+                    <Snackbar open={isOpen} autoHideDuration={5000} onClose={handleClose}>
+                        <Alert variant="filled" severity="error">
+                            {error}
+                        </Alert>
+                    </Snackbar>
                 </div>
-                <div>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        {...formik.getFieldProps('password')}
-                    />
-                </div>
-                <div>
-                    <input
-                        placeholder="Repeat Password"
-                        name="repeatPassword"
-                        {...formik.getFieldProps('repeatPassword')}
-                    />
-                    {formik.errors.password && formik.touched.password
-                        ? <div style={{color: 'red'}}>{formik.errors.password}</div>
-                        : null}
-                </div>
-                <button type="submit" disabled={loaderStatus === "loading"}>Send</button>
-            </form>
-            <div>
-                <Snackbar open={isOpen} autoHideDuration={5000} onClose={handleClose}>
-                    <Alert variant="filled" severity="error">
-                        {error}
-                    </Alert>
-                </Snackbar>
             </div>
-        </div>
+        </>
     )
 }
 

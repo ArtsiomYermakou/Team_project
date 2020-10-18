@@ -1,7 +1,8 @@
 .App {
 
 }
-.block{
-    margin-left: 160px;
-    margin-right: 160px;
+
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
 }

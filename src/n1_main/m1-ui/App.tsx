@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {HashRouter, Route} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import Header from "./component/Header/Header";
 import {Profile} from "./component/Profile/Profile";
 import Registration from "./component/Registration/Registration";
@@ -13,13 +13,13 @@ const App = () => {
         <div className="App">
             <HashRouter>
                 <Header/>
-                <div className="block">
+                <Switch>
                     <Route exact path='/' render={() => <Profile/>}/>
-                    <Route exact path='/login' render={() => <Login/>}/>
-                    <Route exact path='/registration' render={() => <Registration/>}/>
-                    <Route exact path='/passwordChange' render={() => <PasswordChange/>}/>
-                    <Route exact path='/forgotPassword' render={() => <ForgotPassword/>}/>
-                </div>
+                    <Route path='/login' render={() => <Login/>}/>
+                    <Route path='/registration' render={() => <Registration/>}/>
+                    <Route path='/passwordChange' render={() => <PasswordChange/>}/>
+                    <Route path='/forgotPassword' render={() => <ForgotPassword/>}/>
+                </Switch>
             </HashRouter>
         </div>
     );
