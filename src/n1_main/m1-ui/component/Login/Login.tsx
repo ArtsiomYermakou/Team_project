@@ -15,7 +15,6 @@ const Login = () => {
 }
 
 //TEST 1.0
-// awdawdawdawdawd
 //TEST 2.0
 
 export default Login;
