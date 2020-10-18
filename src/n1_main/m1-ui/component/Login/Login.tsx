@@ -14,8 +14,8 @@ const Login = () => {
     )
 }
 
-//TEST 1.0
-//TEST 2.0
+
+//Artem TEST 2.0
 
 export default Login;
 // Andrii test 1.0
