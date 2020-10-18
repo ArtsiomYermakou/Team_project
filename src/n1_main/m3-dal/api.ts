@@ -9,12 +9,18 @@ const settings = {
 }
 
 const instance = axios.create({
-    baseURL: "http://localhost:7542/2.0/",
+    baseURL: "https://neko-back.herokuapp.com/2.0/",
     ...settings,
 })
 
-const authAPI = {
-    login() {
-        return instance.get("");
+export const authAPI = {
+    registration(data: RegistrationDataType) {
+        return instance.post("auth/register", data);
     },
+}
+
+export type RegistrationDataType = {
+    email: string
+    password: string
+    repeatPassword?: string // not necessarily
 }
