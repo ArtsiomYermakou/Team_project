@@ -16,7 +16,5 @@ const Login = () => {
 
 
 //Artem TEST 2.0
-//Artem TEST 3.0
-//Artem TEST 4.0
 
 export default Login;
