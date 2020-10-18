@@ -2,10 +2,11 @@ import React from 'react';
 import './App.css';
 import {HashRouter, Route} from "react-router-dom";
 import Header from "./component/Header/Header";
-import {Main} from "./component/Main/Main";
+import {Profile} from "./component/Profile/Profile";
 import Login from "./component/Login/Login";
 import Registration from "./component/Registration/Registration";
 import PasswordChange from "./component/PasswordChange/PasswordChange";
+import ForgotPassword from "./component/ForgotPassword/ForgotPassword";
 
 const App = () => {
     return (
@@ -13,10 +14,11 @@ const App = () => {
             <HashRouter>
                 <Header/>
                 <div className="block">
-                    <Route exact path='/' render={() => <Main/>}/>
-                    <Route exact path='/Login' render={() => <Login/>}/>
-                    <Route exact path='/Registration' render={() => <Registration/>}/>
-                    <Route exact path='/PasswordChange' render={() => <PasswordChange/>}/>
+                    <Route exact path='/' render={() => <Profile/>}/>
+                    <Route exact path='/login' render={() => <Login/>}/>
+                    <Route exact path='/registration' render={() => <Registration/>}/>
+                    <Route exact path='/passwordChange' render={() => <PasswordChange/>}/>
+                    <Route exact path='/forgotPassword' render={() => <ForgotPassword/>}/>
                 </div>
             </HashRouter>
         </div>

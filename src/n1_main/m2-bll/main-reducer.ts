@@ -5,7 +5,7 @@ const InitialState = {}
 
 const mainReducer = (state: InitialStateType = InitialState, action: ActionTypes) => {
     switch (action.type) {
-        case "Main": {
+        case "Profile": {
 
         }
         default: {
@@ -14,6 +14,6 @@ const mainReducer = (state: InitialStateType = InitialState, action: ActionTypes
     }
 }
 export const MainAC = () => (
-    {type: "Main"} as const
+    {type: "Profile"} as const
 )
 export default mainReducer;
