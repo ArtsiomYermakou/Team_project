@@ -39,7 +39,7 @@ export const LoginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionType
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + " ,more details in the console")
             console.log("Error", {...e})
-            setStatusProgressAC("failed")
+            dispatch(setStatusProgressAC("failed"))
         })
 }
 
