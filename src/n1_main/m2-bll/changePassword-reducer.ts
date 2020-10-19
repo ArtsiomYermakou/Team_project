@@ -11,9 +11,9 @@ const InitialState = {
 
 const changePasswordReducer = (state: InitialStateType = InitialState, action: ActionTypes) => {
     switch (action.type) {
-        case "CHANGE-PASSWORD": {
-            return {...state, password: action.value}
-        }
+        // case "CHANGE-PASSWORD": {
+        //     return {...state, password: action.value}
+        // }
         case "SET-PASSWORD": {
             return {...state, setPassword: action.isSet}
         }
@@ -24,9 +24,6 @@ const changePasswordReducer = (state: InitialStateType = InitialState, action: A
 }
 
 //AC
-export const changePasswordAC = (value: string) => (
-    {type: "CHANGE-PASSWORD", value} as const
-)
 export const setPasswordAC = (isSet: boolean) => (
     {type: "SET-PASSWORD", isSet} as const
 )
@@ -37,7 +34,6 @@ export const changePasswordTC = (data: ChangePasswordType) => (dispatch: Dispatc
     authAPI.changePassword(data)
         .then(res => {
             console.log(res.data)
-            // dispatch(changePasswordAC(res.data.info))
             dispatch(setPasswordAC(true))
             dispatch(setStatusProgressAC("succeeded"))
         })

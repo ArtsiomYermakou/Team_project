@@ -6,18 +6,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {changePasswordTC} from "../../../m2-bll/changePassword-reducer";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {RequestStatusType} from "../../../m2-bll/login-reducer";
-import {Redirect} from "react-router-dom";
+import {Redirect, useParams} from "react-router-dom";
 
 const PasswordChange = () => {
-
     const dispatch = useDispatch();
     const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
     const setPassword = useSelector<AppRootStateType, boolean>(state => state.changePassword.setPassword)
 
+    const {token} = useParams();
+    console.log(token)
+
     const formik = useFormik({
         initialValues: {
             password: "",
-            resetPasswordToken: ""
+            resetPasswordToken: token
         },
         validate: values => {
             const errors: FormikErrorType = {};
@@ -34,6 +36,7 @@ const PasswordChange = () => {
         },
         onSubmit: values => {
             dispatch(changePasswordTC(values))
+            console.log(values)
         }
     })
 
@@ -59,16 +62,6 @@ const PasswordChange = () => {
                         {...formik.getFieldProps("password")}
                     />
                     {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                    <br/>
-                    <TextField
-                        type="password"
-                        label="TOKEN"
-                        margin="normal"
-                        variant={"outlined"}
-                        {...formik.getFieldProps("resetPasswordToken")}
-                    />
-                    {formik.errors.resetPasswordToken ?
-                        <div style={{color: "red"}}>{formik.errors.resetPasswordToken}</div> : null}
                     <br/>
                     <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
                             color={'primary'}>Change password</Button>

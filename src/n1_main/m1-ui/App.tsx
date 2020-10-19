@@ -17,7 +17,7 @@ const App = () => {
                     <Route exact path='/' render={() => <Profile/>}/>
                     <Route path='/login' render={() => <Login/>}/>
                     <Route path='/registration' render={() => <Registration/>}/>
-                    <Route path='/passwordChange' render={() => <PasswordChange/>}/>
+                    <Route path="/passwordChange/:token" render={() => <PasswordChange/>}/>
                     <Route path='/forgotPassword' render={() => <ForgotPassword/>}/>
                 </Switch>
             </HashRouter>
