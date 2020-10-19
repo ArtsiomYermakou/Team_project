@@ -44,7 +44,7 @@ const Login = () => {
     }
 
     const buttonDisabled = () => {
-        if (progress === "loading") return true
+        if (progress === "loading" || !formik.values.email || !formik.values.password) return true
     }
 
     return (

@@ -22,6 +22,9 @@ export const authAPI = {
     },
     forgotPassword(data: ForgotPasswordType) {
         return instance.post<ResponseForgotType>("auth/forgot", data);
+    },
+    changePassword(data: ChangePasswordType) {
+        return instance.post("auth/set-new-password", data)
     }
 }
 //types
@@ -34,6 +37,10 @@ export type ForgotPasswordType = {
     email: string
     from: string
     message: string
+}
+export type ChangePasswordType = {
+    password: string
+    resetPasswordToken: string
 }
 
 export type ResponseLoginType = {
