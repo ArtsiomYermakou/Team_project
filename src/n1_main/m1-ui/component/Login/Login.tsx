@@ -4,13 +4,15 @@ import {NavLink, Redirect} from "react-router-dom";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {Button, Checkbox, FormControl, FormControlLabel, TextField} from "@material-ui/core";
-import {LoginTC} from "../../../m2-bll/login-reducer";
+import {Button, Checkbox, FormControl, FormControlLabel, LinearProgress, TextField} from "@material-ui/core";
+import {LoginTC, RequestStatusType} from "../../../m2-bll/login-reducer";
 
 const Login = () => {
 
     const dispatch = useDispatch();
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
+    const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
+
 
     const formik = useFormik({
         initialValues: {
@@ -41,38 +43,46 @@ const Login = () => {
         return <Redirect to={"/"}/>
     }
 
+    const buttonDisabled = () => {
+        if (progress === "loading") return true
+    }
+
     return (
-        <div>
-            <h1 className={style.title}>Login</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <FormControl>
-                    <TextField
-                        label="Email"
-                        margin="normal"
-                        variant={"outlined"}
-                        {...formik.getFieldProps("email")}
-                    />
-                    {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                    <br/>
-                    <TextField
-                        type="password"
-                        label="Password"
-                        margin="normal"
-                        variant={"outlined"}
-                        {...formik.getFieldProps("password")}
-                    />
-                    {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                    <br/>
-                    <FormControlLabel
-                        label={'Remember me'}
-                        control={<Checkbox
-                            {...formik.getFieldProps("rememberMe")}/>}
-                    /><br/>
-                    <Button type={'submit'} variant={'outlined'} color={'primary'}>Login</Button>
-                </FormControl>
-            </form>
-            <NavLink to={"/forgotPassword"}>Forgot Password</NavLink>
-        </div>
+        <>
+            {progress === "loading" ? <LinearProgress/> : null}
+            <div className="container">
+                <h1 className={style.title}>Login</h1>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormControl>
+                        <TextField
+                            label="Email"
+                            margin="normal"
+                            variant={"outlined"}
+                            {...formik.getFieldProps("email")}
+                        />
+                        {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+                        <br/>
+                        <TextField
+                            type="password"
+                            label="Password"
+                            margin="normal"
+                            variant={"outlined"}
+                            {...formik.getFieldProps("password")}
+                        />
+                        {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                        <br/>
+                        <FormControlLabel
+                            label={'Remember me'}
+                            control={<Checkbox
+                                {...formik.getFieldProps("rememberMe")}/>}
+                        /><br/>
+                        <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
+                                color={'primary'}>Login</Button>
+                    </FormControl>
+                </form>
+                <NavLink to={"/forgotPassword"}>Forgot Password</NavLink>
+            </div>
+        </>
     )
 }
 

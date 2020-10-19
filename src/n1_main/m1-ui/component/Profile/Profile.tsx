@@ -10,9 +10,10 @@ export const Profile = () => {
 
     return (
         <div className={style.mainBlock}>
-            <h1 className={style.title}>Main page</h1>
-            <h3>{name}</h3>
-
+            <div className="container">
+                <h1 className={style.title}>Main page</h1>
+                <h3>{name}</h3>
+            </div>
         </div>
     )
 }
