@@ -20,12 +20,20 @@ export const authAPI = {
     registration(data: RegistrationDataType) {
         return instance.post("auth/register", data);
     },
+    forgotPassword(data: ForgotPasswordType) {
+        return instance.post<ResponseForgotType>("auth/forgot", data);
+    }
 }
 //types
 export type LoginParamsType = {
     email: string
     password: string
     rememberMe: boolean
+}
+export type ForgotPasswordType = {
+    email: string
+    from: string
+    message: string
 }
 
 export type ResponseLoginType = {
@@ -39,6 +47,11 @@ export type ResponseLoginType = {
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
+    error: string
+}
+
+export type ResponseForgotType = {
+    info: string
     error: string
 }
 

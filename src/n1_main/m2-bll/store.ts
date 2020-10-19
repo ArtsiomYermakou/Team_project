@@ -4,12 +4,14 @@ import profileReducer, {setProfileDataAC} from "./profile-reducer";
 import loginReducer, {loginAC, setStatusProgressAC} from "./login-reducer";
 import registrationReducer, {requestStatus, setErrorRegistration, setIsLoggedIn} from "./registration-reducer";
 import changePasswordReducer, {changePasswordAC} from "./changePassword-reducer";
+import forgotPasswordReducer, {forgotPasswordAC} from "./forgotPassword-reducer";
 
 const rootReducer = combineReducers({
     profile: profileReducer,
     login: loginReducer,
     registration: registrationReducer,
     changePassword: changePasswordReducer,
+    forgotPassword: forgotPasswordReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -23,7 +25,9 @@ export type ActionTypes = |
     ReturnType<typeof setErrorRegistration> |
     ReturnType<typeof requestStatus> |
     ReturnType<typeof changePasswordAC> |
-    ReturnType<typeof setStatusProgressAC>
+    ReturnType<typeof setStatusProgressAC> |
+    ReturnType<typeof forgotPasswordAC>
+
 
 // @ts-ignore
 window.store = store
