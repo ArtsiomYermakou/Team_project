@@ -3,7 +3,7 @@ import thunk from "redux-thunk"
 import profileReducer, {setProfileDataAC} from "./profile-reducer";
 import loginReducer, {loginAC, setStatusProgressAC} from "./login-reducer";
 import registrationReducer, {requestStatus, setErrorRegistration, setIsLoggedIn} from "./registration-reducer";
-import changePasswordReducer, {changePasswordAC} from "./changePassword-reducer";
+import changePasswordReducer, {changePasswordAC, setPasswordAC} from "./changePassword-reducer";
 import forgotPasswordReducer, {forgotPasswordAC} from "./forgotPassword-reducer";
 
 const rootReducer = combineReducers({
@@ -26,7 +26,8 @@ export type ActionTypes = |
     ReturnType<typeof requestStatus> |
     ReturnType<typeof changePasswordAC> |
     ReturnType<typeof setStatusProgressAC> |
-    ReturnType<typeof forgotPasswordAC>
+    ReturnType<typeof forgotPasswordAC> |
+    ReturnType<typeof setPasswordAC>
 
 
 // @ts-ignore

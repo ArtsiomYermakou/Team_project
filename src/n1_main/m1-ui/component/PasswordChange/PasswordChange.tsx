@@ -12,8 +12,7 @@ const PasswordChange = () => {
 
     const dispatch = useDispatch();
     const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
-    const changedPassword = useSelector<AppRootStateType, string>(state => state.changePassword.password)
-
+    const setPassword = useSelector<AppRootStateType, boolean>(state => state.changePassword.setPassword)
 
     const formik = useFormik({
         initialValues: {
@@ -42,7 +41,7 @@ const PasswordChange = () => {
         if (progress === "loading" || !formik.values.password || !formik.values.resetPasswordToken) return true
     }
 
-    if (changedPassword !== "") {
+    if (setPassword) {
         return <Redirect to={"/"}/>
     }
 

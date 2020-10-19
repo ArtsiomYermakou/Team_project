@@ -5,13 +5,17 @@ import {setStatusProgressAC} from "./login-reducer";
 
 
 const InitialState = {
-    password: ""
+    password: "",
+    setPassword: false
 }
 
 const changePasswordReducer = (state: InitialStateType = InitialState, action: ActionTypes) => {
     switch (action.type) {
         case "CHANGE-PASSWORD": {
             return {...state, password: action.value}
+        }
+        case "SET-PASSWORD": {
+            return {...state, setPassword: action.isSet}
         }
         default: {
             return state
@@ -23,7 +27,9 @@ const changePasswordReducer = (state: InitialStateType = InitialState, action: A
 export const changePasswordAC = (value: string) => (
     {type: "CHANGE-PASSWORD", value} as const
 )
-
+export const setPasswordAC = (isSet: boolean) => (
+    {type: "SET-PASSWORD", isSet} as const
+)
 
 //TC
 export const changePasswordTC = (data: ChangePasswordType) => (dispatch: Dispatch) => {
@@ -31,7 +37,8 @@ export const changePasswordTC = (data: ChangePasswordType) => (dispatch: Dispatc
     authAPI.changePassword(data)
         .then(res => {
             console.log(res.data)
-            dispatch(changePasswordAC(res.data.info))
+            // dispatch(changePasswordAC(res.data.info))
+            dispatch(setPasswordAC(true))
             dispatch(setStatusProgressAC("succeeded"))
         })
         .catch(error => {
