@@ -25,7 +25,13 @@ export const authAPI = {
     },
     changePassword(data: ChangePasswordType) {
         return instance.post("auth/set-new-password", data)
-    }
+    },
+    authMe() {
+        return instance.post<ResponseLoginType>("auth/me", {});
+    },
+    logOut() {
+        return instance.delete("auth/me", {});
+    },
 }
 //types
 export type LoginParamsType = {

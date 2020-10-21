@@ -1,19 +1,28 @@
 import React from "react";
-import style from "../Login/Login.module.css";
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../m2-bll/store";
-import {Button, Checkbox, FormControl, FormControlLabel, LinearProgress, TextField} from "@material-ui/core";
-import {LoginTC, RequestStatusType} from "../../../m2-bll/login-reducer";
+import {useDispatch} from "react-redux";
+import {Avatar, Button, Checkbox, FormControlLabel, Grid, TextField, Typography} from "@material-ui/core";
+import {LoginTC} from "../../../m2-bll/login-reducer";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import style from "./Login.module.scss"
 
-const Login = () => {
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
+
+type LoginFormType = {
+    progress: string
+    classes: any
+}
+
+
+const Login = ({progress, classes}: LoginFormType) => {
     const dispatch = useDispatch();
-    const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
-    const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
-
-
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -39,57 +48,81 @@ const Login = () => {
         }
     })
 
-    if (isAuth) {
-        return <Redirect to={"/"}/>
-    }
-
     const buttonDisabled = () => {
         if (progress === "loading" || !formik.values.email || !formik.values.password) return true
     }
-
     return (
         <>
-            {progress === "loading" ? <LinearProgress/> : null}
-            <div className="container">
-                <h1 className={style.title}>Login</h1>
-                <form onSubmit={formik.handleSubmit}>
-                    <FormControl>
-                        <TextField
-                            label="Email"
-                            margin="normal"
-                            variant={"outlined"}
-                            {...formik.getFieldProps("email")}
-                        />
-                        {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                        <br/>
-                        <TextField
-                            type="password"
-                            label="Password"
-                            margin="normal"
-                            variant={"outlined"}
-                            {...formik.getFieldProps("password")}
-                        />
-                        {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                        <br/>
-                        <FormControlLabel
-                            label={'Remember me'}
-                            control={<Checkbox
-                                {...formik.getFieldProps("rememberMe")}/>}
-                        /><br/>
-                        <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
-                                color={'primary'}>Login</Button>
-                    </FormControl>
-                </form>
-                <NavLink to={"/forgotPassword"}>Forgot Password</NavLink>
-            </div>
+
+            <Avatar className={classes.avatar}>
+                <LockOutlinedIcon/>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Sign in
+            </Typography>
+
+            <form onSubmit={formik.handleSubmit} className={classes.form}>
+
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    {...formik.getFieldProps("email")}
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    {...formik.getFieldProps("password")}
+                />
+                <FormControlLabel
+                    control={<Checkbox {...formik.getFieldProps("rememberMe")} color="primary"/>}
+                    label="Remember me"
+                />
+                <Button
+                    disabled={buttonDisabled()}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                >
+                    Sign In
+                </Button>
+                <Grid container>
+                    <Grid item xs>
+                        <NavLink to="/authPage/forgotPassword">Forgot password?</NavLink>
+                    </Grid>
+                    <Grid item>
+                        <NavLink to="/authPage/registration">
+                            {"Don't have an account? Sign Up"}
+                        </NavLink>
+                    </Grid>
+                </Grid>
+            </form>
         </>
     )
 }
 
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
-
 export default Login;
+
+
+/*
+
+{formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+
+{formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+*/
+

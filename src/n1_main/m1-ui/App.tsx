@@ -3,10 +3,8 @@ import './App.css';
 import {HashRouter, Route, Switch} from "react-router-dom";
 import Header from "./component/Header/Header";
 import {Profile} from "./component/Profile/Profile";
-import Registration from "./component/Registration/Registration";
-import PasswordChange from "./component/PasswordChange/PasswordChange";
-import ForgotPassword from "./component/ForgotPassword/ForgotPassword";
-import Login from "./component/Login/Login";
+import AuthPage from "./pages/AuthPage";
+
 
 const App = () => {
     return (
@@ -15,10 +13,7 @@ const App = () => {
                 <Header/>
                 <Switch>
                     <Route exact path='/' render={() => <Profile/>}/>
-                    <Route path='/login' render={() => <Login/>}/>
-                    <Route path='/registration' render={() => <Registration/>}/>
-                    <Route path="/passwordChange/:token" render={() => <PasswordChange/>}/>
-                    <Route path='/forgotPassword' render={() => <ForgotPassword/>}/>
+                    <Route path='/authPage' render={() => <AuthPage/>}/>
                 </Switch>
             </HashRouter>
         </div>

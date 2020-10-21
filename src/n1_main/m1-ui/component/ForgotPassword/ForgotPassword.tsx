@@ -1,13 +1,14 @@
 import React from "react";
-import style from "../ForgotPassword/ForgotPassword.module.css"
 import {useFormik} from "formik";
-import {Button, LinearProgress, TextField} from "@material-ui/core";
+import {Button, LinearProgress, Snackbar, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPasswordTC} from "../../../m2-bll/forgotPassword-reducer";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {RequestStatusType} from "../../../m2-bll/login-reducer";
+import {RequestStatusType, setStatusProgressAC} from "../../../m2-bll/login-reducer";
+import {Alert} from "@material-ui/lab";
+import style from "./ForgotPassword.module.scss"
 
-const ForgotPassword = () => {
+const ForgotPassword = ({classes}: any) => {
 
     const dispatch = useDispatch();
     const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
@@ -34,6 +35,16 @@ const ForgotPassword = () => {
         }
     })
 
+    // snackbar // ПЛОХОЙ АДАПТИВ!!!!!
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        dispatch(setStatusProgressAC("idle"))
+    };
+    const isOpen = progress === "succeeded"
+
+    // snackbar
     const buttonDisabled = () => {
         if (progress === "loading") return true
     }
@@ -41,19 +52,40 @@ const ForgotPassword = () => {
     return (
         <>
             {progress === "loading" ? <LinearProgress/> : null}
-            <div className="container">
-                <h1 className={style.title}>Forgot Password</h1>
-                <form onSubmit={formik.handleSubmit}>
-                    <TextField
-                        label="Email"
-                        margin="normal"
-                        variant={"outlined"}
-                        {...formik.getFieldProps("email")}/>
-                    {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                    <br/>
-                    <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
-                            color={'primary'}>Forgot</Button>
-                </form>
+            <div className={style.forgotPass}>
+                    <Typography component="h1" variant="h5">
+                        Restore Password
+                    </Typography>
+                    <form onSubmit={formik.handleSubmit} className={classes.form}>
+                        <TextField
+                            variant="outlined" margin="normal"
+                            required fullWidth autoFocus
+                            id="email" label="Email Address"
+                            name="email" autoComplete="email"
+                            {...formik.getFieldProps("email")}/>
+                        {/*{formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}*/}
+
+                        <Button
+                            disabled={buttonDisabled()}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Restore password
+                        </Button>
+                    </form>
+                <Snackbar
+                    className={style.snackbar}
+                    open={isOpen}
+                    anchorOrigin={{horizontal: "right", vertical: "top"}}
+                    autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        This is a success message!
+                    </Alert>
+                </Snackbar>
+
             </div>
         </>
     )

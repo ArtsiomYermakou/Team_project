@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk"
-import profileReducer, {setProfileDataAC} from "./profile-reducer";
+import profileReducer, {isInitializedAC, setProfileDataAC} from "./profile-reducer";
 import loginReducer, {loginAC, setStatusProgressAC} from "./login-reducer";
 import registrationReducer, {requestStatus, setErrorRegistration, setIsLoggedIn} from "./registration-reducer";
 import changePasswordReducer, {setPasswordAC} from "./changePassword-reducer";
@@ -20,6 +20,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export type ActionTypes = |
     ReturnType<typeof setProfileDataAC> |
+    ReturnType<typeof isInitializedAC> |
     ReturnType<typeof loginAC> |
     ReturnType<typeof setIsLoggedIn> |
     ReturnType<typeof setErrorRegistration> |
