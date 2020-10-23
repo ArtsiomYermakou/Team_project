@@ -88,7 +88,7 @@ const Login = ({progress, classes}: LoginFormType) => {
                         autoComplete="email"
                         autoFocus
                         {...formik.getFieldProps("email")}
-                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.email}</span>}
+                        helperText={<span style={{color: "red", position: "absolute"}}>{formik.errors.email}</span>}
                     />
                     {/*{formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}*/}
                     <TextField
@@ -102,7 +102,7 @@ const Login = ({progress, classes}: LoginFormType) => {
                         id="password"
                         autoComplete="current-password"
                         {...formik.getFieldProps("password")}
-                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.password}</span>}
+                        helperText={<span style={{color: "red", position: "absolute"}}>{formik.errors.password}</span>}
                     />
                     <FormControlLabel
                         control={<Checkbox {...formik.getFieldProps("rememberMe")} color="primary"/>}

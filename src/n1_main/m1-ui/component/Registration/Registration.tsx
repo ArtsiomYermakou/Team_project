@@ -88,7 +88,7 @@ const Registration = ({classes}: any) => {
                         name="email" autoComplete="email"
                         onKeyPress={onKeyPressHandler}
                         error={isErrorEmail}
-                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.email}</span>}
+                        helperText={<span style={{color: "red", position: "absolute"}}>{formik.errors.email}</span>}
                         {...formik.getFieldProps('email')}
                     />
                     {isErrorEmail
@@ -97,9 +97,6 @@ const Registration = ({classes}: any) => {
                         </div>
                         : null}
                 </div>
-
-                {/*   {formik.errors.email && formik.touched.email ?
-                    <div style={{color: 'red'}}>{formik.errors.email}</div> : null}*/}
                 <div className={style.customInput}>
                     <TextField
                         variant="outlined"
@@ -114,7 +111,7 @@ const Registration = ({classes}: any) => {
                         autoComplete="current-password"
                         error={isErrorPass}
                         {...formik.getFieldProps('password')}
-                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.password}</span>}
+                        helperText={<span style={{color: "red", position: "absolute"}}>{formik.errors.password}</span>}
                     />
                     {isErrorPass
                         ? <div className={style.iconError}>
@@ -136,7 +133,7 @@ const Registration = ({classes}: any) => {
                         onKeyPress={onKeyPressHandler}
                         error={isErrorRepeatPass}
                         helperText={<span
-                            style={{color: "red", position: "fixed"}}>{formik.errors.repeatPassword}</span>}
+                            style={{color: "red", position: "absolute"}}>{formik.errors.repeatPassword}</span>}
                         {...formik.getFieldProps('repeatPassword')}
                     />
                     {isErrorRepeatPass && isErrorPass
@@ -144,9 +141,6 @@ const Registration = ({classes}: any) => {
                             <ErrorIcon color="secondary"/>
                         </div>
                         : null}
-                    {/*   {formik.errors.password && formik.touched.password
-                    ? <div style={{color: 'red'}}>{formik.errors.password}</div>
-                    : null}*/}
                 </div>
                 <Button
                     disabled={loaderStatus === "loading"}
