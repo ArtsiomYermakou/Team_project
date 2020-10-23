@@ -98,23 +98,6 @@ type FormikErrorType = {
 export default PasswordChange;
 
 
-// <div className="container">
-//     <h1 className={style.title}>Change password</h1>
-//     <form onSubmit={formik.handleSubmit}>
-//         <TextField
-//             type="password"
-//             label="New password"
-//             margin="normal"
-//             variant={"outlined"}
-//             {...formik.getFieldProps("password")}
-//         />
-//         {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-//         <br/>
-//         <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
-//                 color={'primary'}>Change password</Button>
-//     </form>
-// </div>
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
