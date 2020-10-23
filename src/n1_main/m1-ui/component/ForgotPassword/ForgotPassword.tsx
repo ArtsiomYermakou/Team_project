@@ -60,9 +60,9 @@ const ForgotPassword = ({classes}: any) => {
                 Restore Password
             </Typography>
 
-            <div className={style.forgotPass}>
 
-                <form onSubmit={formik.handleSubmit} className={classes.form}>
+            <form onSubmit={formik.handleSubmit} className={classes.form}>
+                <div className={style.forgotPass}>
                     <TextField
                         variant="outlined" margin="normal"
                         required fullWidth autoFocus
@@ -89,8 +89,9 @@ const ForgotPassword = ({classes}: any) => {
                             This is a success message!
                         </Alert>
                     </Snackbar>
-                </form>
-            </div>
+                </div>
+            </form>
+
         </>
     )
 }
