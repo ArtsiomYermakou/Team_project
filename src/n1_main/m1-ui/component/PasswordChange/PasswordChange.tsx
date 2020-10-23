@@ -1,20 +1,23 @@
 import React from "react";
-import style from "../PasswordChange/PasswordChange.module.css";
-import {useFormik} from "formik";
-import {Button, LinearProgress, TextField} from "@material-ui/core";
+import {Avatar, Button, Container, CssBaseline, LinearProgress, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {changePasswordTC} from "../../../m2-bll/changePassword-reducer";
+import {changePasswordTC, InitialStateType} from "../../../m2-bll/changePassword-reducer";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {RequestStatusType} from "../../../m2-bll/login-reducer";
 import {Redirect, useParams} from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {useFormik} from "formik";
 
 const PasswordChange = () => {
+    // style
+    const classes = useStyles();
+    // style
+
+    const {isCorrectPass, setPassword} = useSelector<AppRootStateType, InitialStateType>(state => state.changePassword)
+
     const dispatch = useDispatch();
-    const progress = useSelector<AppRootStateType, RequestStatusType>(state => state.login.progress)
-    const setPassword = useSelector<AppRootStateType, boolean>(state => state.changePassword.setPassword)
 
     const {token} = useParams();
-    console.log(token)
+    console.log(isCorrectPass)
 
     const formik = useFormik({
         initialValues: {
@@ -28,21 +31,18 @@ const PasswordChange = () => {
             } else if (values.password.length < 7) {
                 errors.password = "Password > 7 symbols"
             }
-            if (!values.resetPasswordToken) {
-                errors.resetPasswordToken = "Required";
-            }
-
             return errors;
         },
         onSubmit: values => {
+            debugger
             dispatch(changePasswordTC(values))
             console.log(values)
         }
     })
 
-    const buttonDisabled = () => {
-        if (progress === "loading" || !formik.values.password || !formik.values.resetPasswordToken) return true
-    }
+    // const buttonDisabled = () => {
+    //     if (isCorrectPass || !formik.values.password || !formik.values.resetPasswordToken) return true
+    // }
 
     if (setPassword) {
         return <Redirect to={"/"}/>
@@ -50,23 +50,42 @@ const PasswordChange = () => {
 
     return (
         <>
-            {progress === "loading" ? <LinearProgress/> : null}
-            <div className="container">
-                <h1 className={style.title}>Change password</h1>
-                <form onSubmit={formik.handleSubmit}>
-                    <TextField
-                        type="password"
-                        label="New password"
-                        margin="normal"
-                        variant={"outlined"}
-                        {...formik.getFieldProps("password")}
-                    />
-                    {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                    <br/>
-                    <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
-                            color={'primary'}>Change password</Button>
-                </form>
-            </div>
+            {isCorrectPass ? <LinearProgress/> : null}
+
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Change Password
+                    </Typography>
+                    <form onSubmit={formik.handleSubmit} className={classes.form} >
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            {...formik.getFieldProps("password")}
+                            helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.password}</span>}
+                        />
+                        <Button
+                            disabled={isCorrectPass}
+                            type="submit"
+                            fullWidth variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            change password
+                        </Button>
+                    </form>
+                </div>
+            </Container>
+
         </>
     )
 }
@@ -77,3 +96,41 @@ type FormikErrorType = {
 }
 
 export default PasswordChange;
+
+
+// <div className="container">
+//     <h1 className={style.title}>Change password</h1>
+//     <form onSubmit={formik.handleSubmit}>
+//         <TextField
+//             type="password"
+//             label="New password"
+//             margin="normal"
+//             variant={"outlined"}
+//             {...formik.getFieldProps("password")}
+//         />
+//         {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+//         <br/>
+//         <Button disabled={buttonDisabled()} type={'submit'} variant={'outlined'}
+//                 color={'primary'}>Change password</Button>
+//     </form>
+// </div>
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));

@@ -1,6 +1,6 @@
 import React from "react";
 import {useFormik} from "formik";
-import {Button, LinearProgress, Snackbar, TextField, Typography} from "@material-ui/core";
+import {Avatar, Button, LinearProgress, Snackbar, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPasswordTC} from "../../../m2-bll/forgotPassword-reducer";
 import {AppRootStateType} from "../../../m2-bll/store";
@@ -52,40 +52,44 @@ const ForgotPassword = ({classes}: any) => {
     return (
         <>
             {progress === "loading" ? <LinearProgress/> : null}
+
+            <Avatar className={classes.avatar}>
+
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Restore Password
+            </Typography>
+
             <div className={style.forgotPass}>
-                    <Typography component="h1" variant="h5">
-                        Restore Password
-                    </Typography>
-                    <form onSubmit={formik.handleSubmit} className={classes.form}>
-                        <TextField
-                            variant="outlined" margin="normal"
-                            required fullWidth autoFocus
-                            id="email" label="Email Address"
-                            name="email" autoComplete="email"
-                            {...formik.getFieldProps("email")}/>
-                        {/*{formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}*/}
 
-                        <Button
-                            disabled={buttonDisabled()}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Restore password
-                        </Button>
-                    </form>
-                <Snackbar
-                    className={style.snackbar}
-                    open={isOpen}
-                    anchorOrigin={{horizontal: "right", vertical: "top"}}
-                    autoHideDuration={4000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                        This is a success message!
-                    </Alert>
-                </Snackbar>
+                <form onSubmit={formik.handleSubmit} className={classes.form}>
+                    <TextField
+                        variant="outlined" margin="normal"
+                        required fullWidth autoFocus
+                        id="email" label="Email Address"
+                        name="email" autoComplete="email"
+                        {...formik.getFieldProps("email")}/>
+                    {/*{formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}*/}
 
+                    <Button
+                        disabled={buttonDisabled()}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Restore password
+                    </Button>
+                    <Snackbar
+                        className={style.snackbarItem}
+                        open={isOpen}
+                        autoHideDuration={4000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            This is a success message!
+                        </Alert>
+                    </Snackbar>
+                </form>
             </div>
         </>
     )

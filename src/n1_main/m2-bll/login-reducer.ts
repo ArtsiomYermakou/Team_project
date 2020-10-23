@@ -47,7 +47,7 @@ export const LoginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionType
 //TYPES
 const InitialStateLogin = {
     isAuth: false,
-    progress: "idle" as RequestStatusType
+    progress: "idle" as RequestStatusType,
 }
 
 export type InitialStateLoginType = typeof InitialStateLogin;

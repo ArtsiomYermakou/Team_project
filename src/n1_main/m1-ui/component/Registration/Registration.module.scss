@@ -1,8 +1,26 @@
+.snackBarContainer {
+  position: relative;
+
+  .snackbarItem {
+    position: absolute;
+    top: 100px; // костыль
+    width: 100%;
+    right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .snackBarContainer .snackbarItem {
+    left: 0;
+  }
+}
+
+
 .customInput {
   position: relative;
 
   .iconError {
-    position: absolute;
+    position: fixed;
     top: 30px;
     right: 10px;
   }

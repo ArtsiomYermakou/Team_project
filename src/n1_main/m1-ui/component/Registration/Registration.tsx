@@ -1,4 +1,4 @@
-import React, {KeyboardEvent, useState} from "react";
+import React, {KeyboardEvent} from "react";
 import {useFormik} from "formik";
 import {RegistrationDataType} from "../../../m3-dal/api";
 import {InitialStateType, registrationTC, setErrorRegistration} from "../../../m2-bll/registration-reducer";
@@ -23,9 +23,10 @@ const validate = (value: RegistrationDataType) => {
     } else if (value.password.length < 7) {
         error.password = 'Password must be 8 characters or more'
     } else if (!value.repeatPassword) {
-        error.password = 'Please repeat you password';
+        error.repeatPassword = 'Please repeat you password';
     } else if (value.repeatPassword !== value.password) {
         error.password = 'Your passwords are not equal';
+        error.repeatPassword = 'Your passwords are not equal';
     }
     return error;
 }
@@ -54,12 +55,14 @@ const Registration = ({classes}: any) => {
     }
     const isOpen = error !== null;
     // Input Error
-    const [inputError, setInputError] = useState<boolean>(false)
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-
+        formik.setTouched({}, false)
     }
-
+    const isErrorEmail = !!(formik.touched.email && formik.errors.email)
+    const isErrorPass = !!(formik.touched.password && formik.errors.password)
+    const isErrorRepeatPass = !!(formik.touched.repeatPassword && formik.errors.repeatPassword)
+    // Input Error
     // Redirect to Login after successful registration
     if (isLoggedIn) {
         return <Redirect to={"/authPage/login"}/>
@@ -70,8 +73,9 @@ const Registration = ({classes}: any) => {
             {loaderStatus === "loading" && <LinearProgress/>}
 
             <Avatar className={classes.avatar}>
-
+                {/*ICON*/}
             </Avatar>
+
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
@@ -83,10 +87,11 @@ const Registration = ({classes}: any) => {
                         id="email" label="Email Address"
                         name="email" autoComplete="email"
                         onKeyPress={onKeyPressHandler}
-                        error={inputError}
+                        error={isErrorEmail}
+                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.email}</span>}
                         {...formik.getFieldProps('email')}
                     />
-                    {inputError
+                    {isErrorEmail
                         ? <div className={style.iconError}>
                             <ErrorIcon color="secondary"/>
                         </div>
@@ -95,37 +100,54 @@ const Registration = ({classes}: any) => {
 
                 {/*   {formik.errors.email && formik.touched.email ?
                     <div style={{color: 'red'}}>{formik.errors.email}</div> : null}*/}
-
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    {...formik.getFieldProps('password')}
-                />
-
-
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Repeat Password"
-                    type="password"
-                    id="repeatPassword"
-                    autoComplete="current-password"
-                    name="repeatPassword"
-                    {...formik.getFieldProps('repeatPassword')}
-                />
-                {/*   {formik.errors.password && formik.touched.password
+                <div className={style.customInput}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        onKeyPress={onKeyPressHandler}
+                        id="password"
+                        autoComplete="current-password"
+                        error={isErrorPass}
+                        {...formik.getFieldProps('password')}
+                        helperText={<span style={{color: "red", position: "fixed"}}>{formik.errors.password}</span>}
+                    />
+                    {isErrorPass
+                        ? <div className={style.iconError}>
+                            <ErrorIcon color="secondary"/>
+                        </div>
+                        : null}
+                </div>
+                <div className={style.customInput}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        label="Repeat Password"
+                        type="password"
+                        id="repeatPassword"
+                        autoComplete="current-password"
+                        name="repeatPassword"
+                        onKeyPress={onKeyPressHandler}
+                        error={isErrorRepeatPass}
+                        helperText={<span
+                            style={{color: "red", position: "fixed"}}>{formik.errors.repeatPassword}</span>}
+                        {...formik.getFieldProps('repeatPassword')}
+                    />
+                    {isErrorRepeatPass && isErrorPass
+                        ? <div className={style.iconError}>
+                            <ErrorIcon color="secondary"/>
+                        </div>
+                        : null}
+                    {/*   {formik.errors.password && formik.touched.password
                     ? <div style={{color: 'red'}}>{formik.errors.password}</div>
                     : null}*/}
-
+                </div>
                 <Button
                     disabled={loaderStatus === "loading"}
                     type="submit"
@@ -136,14 +158,16 @@ const Registration = ({classes}: any) => {
                 >
                     Sign Up
                 </Button>
+                <div className={style.snackBarContainer}>
+                    <Snackbar
+                        className={style.snackbarItem}
+                        open={isOpen} autoHideDuration={5000} onClose={handleClose}>
+                        <Alert variant="filled" severity="error">
+                            {error}
+                        </Alert>
+                    </Snackbar>
+                </div>
             </form>
-            <div>
-                <Snackbar open={isOpen} autoHideDuration={5000} onClose={handleClose}>
-                    <Alert variant="filled" severity="error">
-                        {error}
-                    </Alert>
-                </Snackbar>
-            </div>
         </>
     )
 }
